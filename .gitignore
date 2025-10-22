@@ -16,3 +16,5 @@ out
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+tdahconecta/service_account.json
+tdahconecta/src/firebase/credentialsFirebase.json
