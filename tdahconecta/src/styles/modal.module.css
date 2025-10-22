@@ -1,0 +1,58 @@
+/* Modal.module.css */
+.modalContainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+  }
+  
+  .modalHeader {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .modalBody {
+    margin-bottom: 20px;
+  }
+  
+  .modalFooter {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px; /* Espaçamento abaixo do input */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 12px; /* Ajuste do tamanho da fonte */
+  }
+
+  
+  .button {
+    background-color: #3dae8a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+/* Modal.module.css */
+
+.label {
+    font-weight: bold;
+    margin-top: 12px;
+    display: block; /* Garante que a label ocupe sua própria linha */
+    font-family: 'Arial', sans-serif; /* Exemplo de ajuste de fonte */
+    margin-bottom: 8px; /* Ajuste de espaçamento abaixo da label */
+    font-size: 12px; /* Ajuste do tamanho da fonte */
+    color: #2bb655; /* Ajuste da cor do texto */
+  }
+  

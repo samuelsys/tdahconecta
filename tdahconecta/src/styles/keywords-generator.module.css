@@ -1,0 +1,70 @@
+.modalContent {
+    background-color: #fff; /* Cor de fundo do conteúdo do modal */
+    padding: 20px;
+    border-radius: 8px; /* Bordas arredondadas */
+    display: flex; /* Usa flexbox para o layout */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    flex-direction: column; /* Coloca o conteúdo em colunas */
+    max-width: 80%; /* Largura máxima do modal */
+    margin: auto; /* Centraliza o modal na página */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar o modal */
+}
+
+.modalRow {
+    display: flex;
+    flex-wrap: wrap; /* Permite que as colunas quebrem em telas menores */
+    justify-content: space-around; /* Distribui as colunas uniformemente */
+    width: 100%; /* Faz o .modalRow ocupar toda a largura do .modalContent */
+}
+
+.modalColumn {
+    flex: 1; /* Faz com que cada coluna cresça igualmente */
+    margin: 10px; /* Espaçamento entre as colunas */
+    min-width: 250px; /* Largura mínima para que o conteúdo não fique muito espremido */
+    max-width: 30%; /* Largura máxima para evitar colunas muito largas */
+}
+
+.wordList {
+    list-style-type: none; /* Remove os marcadores de lista */
+    padding: 0;
+}
+
+.wordsLine {
+   margin-top: 6px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.copyBtn {
+    display: block; /* Faz o botão ocupar toda a largura */
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #3dae8a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.copyBtn:hover {
+    background-color: #3dae8a; /* Cor do botão ao passar o mouse */
+}
+
+.wordList li {
+    position: relative;
+    padding-left: 20px; /* Ajuste conforme necessário para acomodar o marcador */
+    margin-bottom: 10px; /* Espaço entre os itens da lista */
+}
+
+.wordList li::before {
+    content: "•"; /* Caractere para o marcador, pode ser substituído por qualquer coisa */
+    position: absolute;
+    left: 0; /* Alinhe ao início do item da lista */
+    color: #3dae8a; /* Cor do marcador */
+    font-size: 20px; /* Tamanho do marcador */
+}

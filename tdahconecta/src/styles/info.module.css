@@ -1,0 +1,44 @@
+/* UserProfile.module.css */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  text-align: center;
+}
+
+.profile, .loginPrompt {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px; /* Ajuste a largura máxima conforme necessário */
+}
+
+.button, .loginButton {
+  margin-top: 20px;
+  background-color: #3dae8a;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block; /* Faz com que os botões ocupem a largura total do container */
+  width: 100%;
+}
+
+.button:hover, .loginButton:hover {
+  background-color: #3dae8a;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
+}
