@@ -68,14 +68,9 @@ export default function SpecialistTile({ s }: Props) {
         </div>
       )}
 
-      <div style={{ marginTop: 6 }}>
-        <strong>Idiomas:</strong> {s.languages.join(' · ')}
-      </div>
-
       <div style={{ marginTop: 10 }}>
         <strong>Preço a partir de:</strong>{' '}
         {typeof s.priceFrom === 'number' ? `R$ ${s.priceFrom.toFixed(0)}` : '—'}
-        {s.acceptsInsurance ? ' · aceita convênio' : ''}
       </div>
 
       <div className={styles.actions}>
