@@ -23,6 +23,9 @@ type Props = {
 };
 
 export default function SpecialistTile({ s }: Props) {
+  const locale =
+    s.city && s.state ? `${s.city}/${s.state}` : s.city || s.state || '—';
+
   return (
     <div className={styles.tile}>
       <img
@@ -35,25 +38,27 @@ export default function SpecialistTile({ s }: Props) {
       <div className={styles.platformTag}>{s.profession}</div>
 
       <div style={{ marginBottom: 8 }}>
-        {s.city && s.state ? `${s.city}/${s.state}` : s.city || s.state || '—'} · {s.modality ?? '—'}
+        {locale} · {s.modality ?? '—'}
       </div>
 
-      <div className={styles.card}>
-        <div className={styles.column}>
-          <div className={styles.tag}>Avaliação</div>
-          <div className={styles.value}>{s.rating.toFixed(1)} ★</div>
+      {/* Indicadores (novo layout) */}
+      <div className={styles.statsRow}>
+        <div className={styles.statCard}>
+          <div className={styles.statLabel}>
+            <span className={styles.statIcon}>★</span> Avaliação
+          </div>
+          <div className={styles.statValue}>{s.rating.toFixed(1)}</div>
         </div>
-        <div className={styles.column}>
-          <div className={styles.tag}>Atendimentos</div>
-          <div className={styles.value}>{s.sessionsCount}</div>
-        </div>
-        <div className={styles.column}>
-          <div className={styles.tag}>Opiniões</div>
-          <div className={styles.value}>{s.reviewsCount}</div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statLabel}>
+            <span className={styles.statIcon}>👥</span> Atendimentos
+          </div>
+          <div className={styles.statValue}>{s.sessionsCount}</div>
         </div>
       </div>
 
-      <div style={{ marginTop: 10 }}>
+      <div style={{ marginTop: 12 }}>
         <strong>Condição foco:</strong> {s.primaryCondition ?? '—'}
       </div>
 
@@ -68,7 +73,8 @@ export default function SpecialistTile({ s }: Props) {
       </div>
 
       <div style={{ marginTop: 10 }}>
-        <strong>Preço a partir de:</strong> {s.priceFrom ? `R$ ${s.priceFrom.toFixed(0)}` : '—'}
+        <strong>Preço a partir de:</strong>{' '}
+        {typeof s.priceFrom === 'number' ? `R$ ${s.priceFrom.toFixed(0)}` : '—'}
         {s.acceptsInsurance ? ' · aceita convênio' : ''}
       </div>
 

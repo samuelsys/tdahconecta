@@ -13,13 +13,17 @@
 }
 
 .container {
-  min-height: 500px;
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;    /* <-- era center */
 }
 
 .filterSection {
+  width: 100%;             /* <-- garante alinhamento com a grid abaixo */
   background: #ffffff;
   padding: 20px;
   margin-bottom: 20px;
@@ -57,14 +61,23 @@
   font-size: 16px;
 }
 
-/* Estilos dos resultados e tiles */
+/* Corrige o grid dentro do container */
 .resultsSection {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  justify-items: stretch;  /* <-- era center (ou remova a propriedade) */
 }
 
+@media (max-width: 1100px) {
+  .resultsSection { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .resultsSection { grid-template-columns: 1fr; }
+}
 .tile {
+  width: 100%;             /* <-- garante que o card preencha a coluna */
   background: #ffffff;
   padding: 20px;
   border-radius: 8px;
@@ -132,7 +145,6 @@
   transform: translateY(-2px); /* Eleva o botão para indicar ação */
 }
 
-
 .platformTag {
   background: transparent;
   color: #3dae8a;
@@ -166,13 +178,13 @@
 }
 
 .card {
-    background-color: #ffffff;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 0 24px 24px 0;
-    align-items: center;
-    justify-content: center;
+  background-color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0 24px 24px 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .cardStatistics {
@@ -186,7 +198,6 @@
   justify-content: center;
 }
 
-
 .tag {
   background-color: #3a85d1;
   border-radius: 8px;
@@ -199,12 +210,12 @@
 }
 
 .cardImage {
-  width: 60%; /* Ajusta a largura da imagem para cobrir a largura do cartão */
-  max-height: 120px; /* Limita a altura da imagem */
+  width: 60%;
+  max-height: 120px;
   margin: auto;
-  object-fit: cover; /* Garante que a imagem cubra o espaço disponível sem distorcer */
-  border-top-left-radius: 16px; /* Arredonda os cantos superiores da imagem */
-  border-top-right-radius: 16px; /* Arredonda os cantos superiores da imagem */
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
 .value {
@@ -223,43 +234,41 @@
 }
 
 .cardTitle {
-  font-size: 22px; /* Tamanho maior para mais destaque */
-  color: #3a85d1; /* Cor azul vibrante para o título */
+  font-size: 22px;
+  color: #3a85d1;
   font-weight: bold;
   margin-bottom: 20px;
-  text-align: left; /* Alinhando o título à esquerda para uma aparência moderna */
+  text-align: left;
 }
 
 .cardContent {
-  font-size: 18px; /* Aumentando a legibilidade */
-  color: #333; /* Cor mais escura para contraste */
+  font-size: 18px;
+  color: #333;
 }
 
 .stat {
-  color: #3a85d1; /* Utilizando a mesma cor azul vibrante para os números */
-  font-size: 22px; /* Tornando os números mais destacados */
+  color: #3a85d1;
+  font-size: 22px;
   font-weight: bold;
 }
 
 .cardContent p {
-  margin-bottom: 16px; /* Espaçamento uniforme */
+  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
 }
 
 .valueLabel {
-  color: #777; /* Cor suave para o texto descritivo, mantendo boa legibilidade */
-  font-size: 18px; /* Tamanho adequado para harmonia com o valor */
+  color: #777;
+  font-size: 18px;
 }
 
-/* Estilizando para uma aparência mais agradável */
 .cardContent p:before {
   content: '•';
   margin-right: 8px;
-  color: #3a85d1; /* Cor azul para adicionar um ponto visualmente agradável */
+  color: #3a85d1;
 }
 
-/* Ajustes de responsividade */
 @media (max-width: 768px) {
   .card {
     margin-top: 20px;
@@ -267,11 +276,9 @@
   }
 
   .cardTitle, .cardContent, .stat {
-    text-align: center; /* Centralizando o conteúdo em telas menores */
+    text-align: center;
   }
 }
-
-
 
 .clear {
   clear: both;
@@ -290,14 +297,14 @@
 .paginationButtons {
   margin-top: 20px;
   display: flex;
-  flex-direction: row; /* Isso alinha os itens lado a lado */
-  justify-content: flex-end; /* Alinha os itens à direita */
-  gap: 10px; /* Adiciona um espaço entre os botões */
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .paginationInfo {
-  font-size: 14px; /* Ajuste o tamanho da fonte conforme necessário */
-  white-space: nowrap; /* Previne a quebra de linha do informativo */
+  font-size: 14px;
+  white-space: nowrap;
   margin-top: 14px;
 }
 
@@ -328,7 +335,6 @@
   padding: 10px;
   margin-top: 20px;
   background-color: #ffffff;
-
 }
 
 .flagItem {
@@ -373,9 +379,9 @@
 
 /* Estilos adicionais para a bandeira */
 .flag {
-  width: 4em; /* Aumenta o tamanho da bandeira */
-  height: 4em; /* Mantém a proporção */
-  margin: 0 15px; /* Espaçamento entre a bandeira e as setas */
+  width: 4em;
+  height: 4em;
+  margin: 0 15px;
 }
 
 .arrowButton {
@@ -391,13 +397,13 @@
 }
 
 .arrowButton:hover {
-  background-color: #e0e0e0; /* Cor de fundo ao passar o mouse */
+  background-color: #e0e0e0;
 }
 
 .arrowIcon {
-  fill: #3dae8a; /* Cor do ícone */
-  width: 34px; /* Largura do ícone */
-  height: 34px; /* Altura do ícone */
+  fill: #3dae8a;
+  width: 34px;
+  height: 34px;
 }
 
 .smallFlagsContainer {
@@ -405,22 +411,22 @@
 }
 
 .bigFlag {
-  text-align: center; /* Centraliza todo o conteúdo dentro de .bigFlag */
-  margin-bottom: 4px; /* Espaçamento abaixo do container da bandeira */
+  text-align: center;
+  margin-bottom: 4px;
 }
 
 .bigFlag svg {
   width: 60px;
   height: 60px;
-  display: block; /* Faz com que a bandeira seja tratada como um bloco para permitir a centralização */
+  display: block;
 }
 
 .bigFlagTitle {
-  display: block; /* Garante que o título seja tratado como um bloco, permitindo o uso de margin auto */
-  color: #3dae8a; /* Cor verde para o título */
-  margin-top: 10px; /* Espaçamento acima do título */
-  font-size: 16px; /* Tamanho do texto */
-  font-weight: bold; /* Torna o texto em negrito */
+  display: block;
+  color: #3dae8a;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .topCountriesCard {
@@ -428,7 +434,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
   padding: 10px;
-  border-radius: 8px; /* Arredondando as bordas */
+  border-radius: 8px;
   margin-top: 12px;
 }
 
@@ -438,45 +444,91 @@
   align-items: center;
   justify-content: center;
   padding: 10px;
-  background-color: white; /* Fundo branco para cada país */
-  border-radius: 8px; /* Arredondando as bordas */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra leve para destaque */
-  cursor:pointer;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
 }
 
 .rank {
   font-size: 24px;
   font-weight: bold;
-  color: #333; /* Ajuste conforme necessário */
-  margin-bottom: 5px; /* Espaçamento */
-  
+  color: #333;
+  margin-bottom: 5px;
 }
 
 .searchesTitle {
-  font-size: 18px;
-  margin-top: 2px; /* Espaçamento */
+  margin-top: 2px;
   font-size: 10px;
 }
 
 .searches {
-  font-size: 18px;
-  margin-top: 2px; /* Espaçamento */
+  margin-top: 2px;
   font-size: 10px;
   font-weight: bold;
   color: #3dae8a;
-
 }
 
 .searchesSelected {
-  font-size: 18px;
-  margin-top: 2px; /* Espaçamento */
+  margin-top: 2px;
   font-size: 10px;
   font-weight: bold;
   color: #ffffff;
-
 }
 
 .selected {
-  border: 2px solid #3dae8a; /* Adds a green border */
+  border: 2px solid #3dae8a;
+}
+/* ====== Specialist stats (compacto) ====== */
+.statsRow {
+  display: flex;           /* flex é mais previsível aqui que grid */
+  gap: 8px;                /* menos espaço entre cartões */
+  width: 100%;
 }
 
+.statCard {
+  flex: 1 1 0;             /* cada cartão divide igualmente a largura */
+  min-width: 0;            /* permite encolher sem quebrar */
+  background: #f7f9ff;
+  border: 1px solid #e4ecff;
+  border-radius: 10px;     /* menor raio para parecer “pílula” compacta */
+  padding: 8px 10px;       /* padding reduzido */
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.statLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;                /* espaço menor entre ícone e texto */
+  font-size: 11px;         /* menor */
+  font-weight: 700;
+  color: #3a85d1;
+  letter-spacing: .2px;
+  margin-bottom: 4px;      /* menos altura total */
+  white-space: nowrap;     /* impede quebra de linha */
+}
+
+.statIcon {
+  display: inline-block;
+  font-size: 12px;         /* ícone menor */
+  translate: 0 1px;
+  line-height: 1;
+}
+
+.statValue {
+  font-size: 18px;         /* menor que antes */
+  font-weight: 800;
+  line-height: 1;          /* cola o número na label */
+  color: #3dae8a;
+}
+
+/* em telas bem pequenas, ainda cabe 3 lado a lado; se quiser empilhar: */
+@media (max-width: 420px) {
+  .statsRow {
+    gap: 6px;
+  }
+  .statValue { font-size: 16px; }
+  .statLabel { font-size: 10px; }
+}
