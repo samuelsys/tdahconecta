@@ -1,35 +1,27 @@
 // src/app/api/auth/session/route.ts
-export const runtime = 'nodejs';
-
-import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 import { admin } from '@/firebase/admin';
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const idToken = String(body?.idToken || '');
+    const { idToken } = (await req.json()) as { idToken?: string };
+    if (!idToken) return NextResponse.json({ ok: false }, { status: 400 });
 
-    if (!idToken) {
-      return NextResponse.json({ error: 'Missing idToken' }, { status: 400 });
-    }
+    const expiresInMs = 60 * 60 * 24 * 5 * 1000; // 5 dias
+    const decoded = await admin.auth().verifyIdToken(idToken, true);
+    const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn: expiresInMs });
 
-    // 5 dias
-    const expiresIn = 60 * 60 * 24 * 5 * 1000;
-
-    const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn });
-
-    const c = await cookies();
-    c.set('session', sessionCookie, {
+    cookies().set('session', sessionCookie, {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
       path: '/',
-      maxAge: expiresIn / 1000,
+      maxAge: expiresInMs / 1000,
     });
 
-    return NextResponse.json({ ok: true });
-  } catch (e) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ ok: true, uid: decoded.uid });
+  } catch (_err) { // <- evita o warning
+    return NextResponse.json({ ok: false }, { status: 401 });
   }
 }
