@@ -23,8 +23,11 @@ type Props = {
 };
 
 export default function SpecialistTile({ s }: Props) {
-  const locale =
+  const location =
     s.city && s.state ? `${s.city}/${s.state}` : s.city || s.state || '—';
+
+  const tags = s.tags?.slice?.(0, 3) ?? [];
+  const extra = (s.tags?.length ?? 0) - tags.length;
 
   return (
     <div className={styles.tile}>
@@ -34,14 +37,19 @@ export default function SpecialistTile({ s }: Props) {
         className={styles.tileImg}
       />
 
-      <h3 className={styles.h3}>{s.fullName}</h3>
-      <div className={styles.platformTag}>{s.profession}</div>
-
-      <div style={{ marginBottom: 8 }}>
-        {locale} · {s.modality ?? '—'}
+      {/* header */}
+      <div className={styles.tileHeader}>
+        <h3 className={styles.cardTitleSm}>{s.fullName}</h3>
+        <span className={styles.badgeGreen}>{s.profession}</span>
       </div>
 
-      {/* Indicadores (novo layout) */}
+      <div className={styles.metaRow}>
+        <span className={styles.metaText}>{location}</span>
+        <span className={styles.dot} />
+        <span className={styles.metaText}>{s.modality ?? '—'}</span>
+      </div>
+
+      {/* indicadores compactos */}
       <div className={styles.statsRow}>
         <div className={styles.statCard}>
           <div className={styles.statLabel}>
@@ -58,24 +66,37 @@ export default function SpecialistTile({ s }: Props) {
         </div>
       </div>
 
-      <div style={{ marginTop: 12 }}>
-        <strong>Condição foco:</strong> {s.primaryCondition ?? '—'}
-      </div>
+      {/* infos */}
+      {/* Condição foco */}
+    <div className={styles.infoBlock}>
+    <span className={`${styles.pill} ${styles.pillAccent}`}>
+        {s.primaryCondition ?? '—'}
+    </span>
+     {tags.map((t) => (
+        <span key={t} className={styles.pill}>{t}</span>
+        ))}
+        {extra > 0 && (
+        <span className={`${styles.pill} ${styles.pillMore}`}>+{extra}</span>
+        )}
+    </div>
 
-      {s.tags?.length > 0 && (
-        <div style={{ marginTop: 6 }}>
-          <strong>Tags:</strong> {s.tags.join(' · ')}
+    {/* Tags em pílulas */}
+    <div className={styles.infoBlock}>
+    <span className={styles.infoLabel}></span>
+    <div className={styles.pillRow}>
+       
+    </div>
+    </div>
+
+      <div className={styles.footerRow}>
+        <div className={styles.pricePill}>
+          a partir de <strong>R$ {s.priceFrom ? s.priceFrom.toFixed(0) : '—'}</strong>
         </div>
-      )}
 
-      <div style={{ marginTop: 10 }}>
-        <strong>Preço a partir de:</strong>{' '}
-        {typeof s.priceFrom === 'number' ? `R$ ${s.priceFrom.toFixed(0)}` : '—'}
-      </div>
-
-      <div className={styles.actions}>
-        <button className={styles.buttonCard}>Ver perfil</button>
-        <button className={styles.buttonCard}>Agendar</button>
+        <div className={styles.ctaRow}>
+          <button className={styles.buttonCard}>Ver perfil</button>
+          <button className={styles.buttonCardOutline}>Agendar</button>
+        </div>
       </div>
     </div>
   );

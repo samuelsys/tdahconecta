@@ -1,4 +1,6 @@
-/* Reset básico e estilos gerais */
+/* =========================================================
+   Reset básico e estilos gerais
+   ========================================================= */
 .bodyH2PpSelectInput {
   margin: 0;
   padding: 0;
@@ -12,6 +14,9 @@
   color: #333;
 }
 
+/* =========================================================
+   Layout principal
+   ========================================================= */
 .container {
   width: 100%;
   max-width: 1280px;
@@ -19,11 +24,11 @@
   padding: 40px 24px;
   display: flex;
   flex-direction: column;
-  align-items: stretch;    /* <-- era center */
+  align-items: stretch;
 }
 
 .filterSection {
-  width: 100%;             /* <-- garante alinhamento com a grid abaixo */
+  width: 100%;
   background: #ffffff;
   padding: 20px;
   margin-bottom: 20px;
@@ -61,13 +66,19 @@
   font-size: 16px;
 }
 
-/* Corrige o grid dentro do container */
+/* =========================================================
+   Grid de resultados
+   ========================================================= */
 .resultsSection {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  justify-items: stretch;  /* <-- era center (ou remova a propriedade) */
+  justify-items: stretch;
+  align-items: stretch;          /* garante altura cheia */
+}
+.resultsSection > * {
+  height: 100%;
 }
 
 @media (max-width: 1100px) {
@@ -76,459 +87,272 @@
 @media (max-width: 640px) {
   .resultsSection { grid-template-columns: 1fr; }
 }
+
+/* =========================================================
+   Card (Tile) base
+   ========================================================= */
 .tile {
-  width: 100%;             /* <-- garante que o card preencha a coluna */
+  width: 100%;
   background: #ffffff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;                 /* para colar rodapé */
+  flex-direction: column;
 }
-
 .tile:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Imagem do tile */
 .tileImg {
-  height: 200px; /* Altura fixa para padronizar o tamanho das imagens */
-  border-radius: 8px; /* Cantos arredondados para um visual suave */
-  margin-bottom: 15px; /* Espaçamento abaixo da imagem */
-  object-fit: cover; /* Cobre a área do container sem distorcer, cortando o excesso */
-  display: block; /* Garante que a imagem seja tratada como um bloco, ajudando na centralização */
-  margin-left: auto; /* Centraliza horizontalmente (em conjunto com margin-right) */
-  margin-right: auto; /* Centraliza horizontalmente */
-}
-
-.platformTags, .actions {
-  margin-top: 10px;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* Espaçamento entre os botões */
-  justify-content: center; /* Centraliza os botões na sessão */
-  padding: 0 20px 20px 0;
-  margin-top: 16px;
-}
-
-.buttonCard {
-  background-color: #3dae8a; /* Cor primária */
-  color: #ffffff; /* Texto em branco para contraste */
-  border: none; /* Sem bordas para um look moderno */
-  padding: 8px 16px; /* Padding generoso para conforto no clique */
-  border-radius: 25px; /* Cantos arredondados para botões mais estilosos */
-  font-size: 14px; /* Tamanho de fonte adequado */
-  font-weight: bold; /* Texto em negrito para destaque */
-  cursor: pointer; /* Cursor de ponteiro para indicar ação */
-  transition: all 0.3s ease; /* Transição suave para interações */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidade */
-}
-
-.buttonCardPremium {
-  background-color: #daa520; /* Cor primária */
-  color: #ffffff; /* Texto em branco para contraste */
-  border: none; /* Sem bordas para um look moderno */
-  padding: 8px 16px; /* Padding generoso para conforto no clique */
-  border-radius: 25px; /* Cantos arredondados para botões mais estilosos */
-  font-size: 14px; /* Tamanho de fonte adequado */
-  font-weight: bold; /* Texto em negrito para destaque */
-  cursor: pointer; /* Cursor de ponteiro para indicar ação */
-  transition: all 0.3s ease; /* Transição suave para interações */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidade */
-}
-
-.button:hover, .button:focus {
-  background-color: #2c6db0; /* Cor mais escura ao passar o mouse ou focar */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Sombra maior para efeito elevado */
-  transform: translateY(-2px); /* Eleva o botão para indicar ação */
-}
-
-.platformTag {
-  background: transparent;
-  color: #3dae8a;
-  border-radius: 15px;
-  font-size: 14px;
-  display: inline-block;
-  margin-bottom: 36px;
-  font-weight: bold;
-}
-
-.button {
-  margin-right: 3px;
-  background: #3dae8a;
-  color: white;
-  border: none;
-  padding: 7px 8px;
-  margin-top: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.2s;
-}
-
-.button:hover {
-  background: #3dae8a;
-}
-
-@media (max-width: 600px) {
-  .resultsSection {
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-  }
-}
-
-.card {
-  background-color: #ffffff;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 0 24px 24px 0;
-  align-items: center;
-  justify-content: center;
-}
-
-.cardStatistics {
-  background-color: #ffffff;
-  border-radius: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 24px;
-  align-items: center;
-  justify-content: center;
-}
-
-.tag {
-  background-color: #3a85d1;
-  border-radius: 8px;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 5px 10px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.cardImage {
-  width: 60%;
-  max-height: 120px;
-  margin: auto;
-  object-fit: cover;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-}
-
-.value {
-  font-size: 18px;
-  font-weight: bold;
-  color: #3dae8a;
-  text-align: center;
-  margin-top: 4px;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-basis: 25%;
-}
-
-.cardTitle {
-  font-size: 22px;
-  color: #3a85d1;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.cardContent {
-  font-size: 18px;
-  color: #333;
-}
-
-.stat {
-  color: #3a85d1;
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.cardContent p {
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.valueLabel {
-  color: #777;
-  font-size: 18px;
-}
-
-.cardContent p:before {
-  content: '•';
-  margin-right: 8px;
-  color: #3a85d1;
-}
-
-@media (max-width: 768px) {
-  .card {
-    margin-top: 20px;
-    padding: 20px;
-  }
-
-  .cardTitle, .cardContent, .stat {
-    text-align: center;
-  }
-}
-
-.clear {
-  clear: both;
-}
-
-.centered {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-}
-
-.paginationButtons {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.paginationInfo {
-  font-size: 14px;
-  white-space: nowrap;
-  margin-top: 14px;
-}
-
-@media (max-width: 600px) {
-  .tile {
-    width: 100%;
-  }
-
-  .filterRow {
-    flex-direction: column;
-  }
-
-  .filterRowDiv {
-    flex: none;
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
-  .button {
-    width: 100%;
-  }
-}
-
-.flagsContainer {
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px;
-  margin-top: 20px;
-  background-color: #ffffff;
-}
-
-.flagItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-}
-
-.flagItem.selected {
-  border: 2px solid #3dae8a;
-  border-radius: 50%;
-  padding: 5px;
-}
-
-.flagItem:not(.selected):hover {
-  opacity: 0.8;
-}
-
-.flagSearches {
-  margin-top: 5px;
-  font-size: 12px;
-  color: #555;
-}
-
-.seeAllButton {
-  background-color: transparent;
-  color: #3dae8a;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Estilos adicionais para a bandeira */
-.flag {
-  width: 4em;
-  height: 4em;
-  margin: 0 15px;
-}
-
-.arrowButton {
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.arrowButton:hover {
-  background-color: #e0e0e0;
-}
-
-.arrowIcon {
-  fill: #3dae8a;
-  width: 34px;
-  height: 34px;
-}
-
-.smallFlagsContainer {
-  margin-left: 12px;
-}
-
-.bigFlag {
-  text-align: center;
-  margin-bottom: 4px;
-}
-
-.bigFlag svg {
-  width: 60px;
-  height: 60px;
-  display: block;
-}
-
-.bigFlagTitle {
-  display: block;
-  color: #3dae8a;
-  margin-top: 10px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.topCountriesCard {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 12px;
-}
-
-.countryRank {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  cursor: pointer;
-}
-
-.rank {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.searchesTitle {
-  margin-top: 2px;
-  font-size: 10px;
-}
-
-.searches {
-  margin-top: 2px;
-  font-size: 10px;
-  font-weight: bold;
-  color: #3dae8a;
-}
-
-.searchesSelected {
-  margin-top: 2px;
-  font-size: 10px;
-  font-weight: bold;
-  color: #ffffff;
-}
-
-.selected {
-  border: 2px solid #3dae8a;
-}
-/* ====== Specialist stats (compacto) ====== */
-.statsRow {
-  display: flex;           /* flex é mais previsível aqui que grid */
-  gap: 8px;                /* menos espaço entre cartões */
+  height: 200px;
   width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  margin: 0 auto 15px auto;
 }
 
+/* =========================================================
+   Cabeçalho do card (Nome sozinho)
+   ========================================================= */
+.titleRow {
+  display: block;                /* força linha própria */
+  margin-top: 2px;
+}
+
+.cardTitleSm {
+  font-size: 22px;
+  line-height: 1.25;
+  margin: 0 0 2px 0;
+  color: #0f172a;
+  font-weight: 800;
+
+  /* Evita variar altura entre cards (até 2 linhas) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 36px;             /* ~2 linhas */
+}
+
+/* Profissão em pílula, em linha própria abaixo do nome */
+.badgeGreen {
+  display: inline-flex;
+  background: #e8f7f0;
+  color: #2f9e7a;
+  border: 1px solid #cfeee1;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+/* Meta (cidade / modalidade) com altura constante */
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 8px;
+  min-height: 24px;
+}
+.metaText { color: #475569; font-size: 14px; }
+.dot { width: 4px; height: 4px; border-radius: 999px; background: #94a3b8; display: inline-block; }
+
+/* =========================================================
+   Indicadores compactos (Avaliação, Atendimentos, Opiniões)
+   ========================================================= */
+.statsRow {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  min-height: 68px;             /* altura uniforme */
+  margin-top: 6px;
+  margin-bottom: 10px;
+
+}
 .statCard {
-  flex: 1 1 0;             /* cada cartão divide igualmente a largura */
-  min-width: 0;            /* permite encolher sem quebrar */
+  flex: 1 1 0;
+  min-width: 0;
   background: #f7f9ff;
   border: 1px solid #e4ecff;
-  border-radius: 10px;     /* menor raio para parecer “pílula” compacta */
-  padding: 8px 10px;       /* padding reduzido */
+  border-radius: 10px;
+  padding: 8px 10px;
   text-align: center;
   box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
 }
-
 .statLabel {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;                /* espaço menor entre ícone e texto */
-  font-size: 11px;         /* menor */
+  gap: 4px;
+  font-size: 11px;
   font-weight: 700;
   color: #3a85d1;
   letter-spacing: .2px;
-  margin-bottom: 4px;      /* menos altura total */
-  white-space: nowrap;     /* impede quebra de linha */
+  margin-bottom: 4px;
+  white-space: nowrap;
 }
+.statIcon { display: inline-block; font-size: 12px; translate: 0 1px; line-height: 1; }
+.statValue { font-size: 18px; font-weight: 800; line-height: 1; color: #3dae8a; }
 
-.statIcon {
-  display: inline-block;
-  font-size: 12px;         /* ícone menor */
-  translate: 0 1px;
-  line-height: 1;
-}
-
-.statValue {
-  font-size: 18px;         /* menor que antes */
-  font-weight: 800;
-  line-height: 1;          /* cola o número na label */
-  color: #3dae8a;
-}
-
-/* em telas bem pequenas, ainda cabe 3 lado a lado; se quiser empilhar: */
 @media (max-width: 420px) {
-  .statsRow {
-    gap: 6px;
-  }
+  .statsRow { gap: 6px; }
   .statValue { font-size: 16px; }
   .statLabel { font-size: 10px; }
+}
+
+/* =========================================================
+   Tags em pílulas
+   ========================================================= */
+.tagsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.tagPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+.tagPill--accent {
+  background: #eef6ff;
+  border-color: #d7e8ff;
+  color: #1e66f5;
+}
+
+/* =========================================================
+   Footer do card (Preço + Convênio + Botões)
+   ========================================================= */
+.footerRow {
+  margin-top: auto;             /* cola no rodapé do tile */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.pricePill {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.insBadge {
+  background: #e7f5ff;
+  color: #1e66f5;
+  border: 1px solid #d0e3ff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ctaRow { display: flex; gap: 8px; }
+.ctaRow > * { min-width: 130px; }     /* largura consistente */
+@media (max-width: 640px) {
+  .ctaRow { width: 100%; }
+  .ctaRow > * { flex: 1; min-width: 0; }
+}
+
+/* Botões */
+.buttonCard {
+  background-color: #3dae8a;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.buttonCard:hover { background: #38b08d; transform: translateY(-1px); }
+
+.buttonCardOutline {
+  background: #ffffff;
+  color: #3dae8a;
+  border: 1px solid #3dae8a;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.buttonCardOutline:hover { background: #f6fffb; transform: translateY(-1px); }
+
+/* Blocos de info (label + conteúdo) */
+.infoBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;              /* quebra bonito no mobile */
+}
+
+.infoLabel {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 14px;
+  min-width: max-content;       /* evita quebrar "Condição foco:" */
+}
+
+/* Linha de pílulas */
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Pílula base (herdada do visual das tags) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+  margin-bottom: 16px;
+}
+
+/* Destaque para a condição foco */
+.pillAccent {
+  background: #e8f7f0;
+  border-color: #cfeee1;
+  color: #2f9e7a;
+  font-weight: 300;
+}
+
+/* Pílula do “+N” extra */
+.pillMore {
+  background: #eef6ff;
+  border-color: #d7e8ff;
+  color: #1e66f5;
+  font-weight: 300;
 }
