@@ -46,7 +46,7 @@ export default function NavBar() {
       </button>
 
       <ul className={`${styles.links} ${open ? styles.isOpen : ''}`}>
-        <li><Link href="/specialists">Especialistas</Link></li>
+        <li><Link href="/">Especialistas</Link></li>
         <li><Link href="/info">Perfil</Link></li>
 
         {!logged && (
