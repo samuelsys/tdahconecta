@@ -1,25 +1,33 @@
-// src/components/Analytics.tsx
 'use client';
 
-import Script from 'next/script';
 import { useEffect } from 'react';
 
-const GA_TRACKING_ID = 'G-36WRMST94T';
+declare global {
+  interface Window {
+    dataLayer?: Array<Record<string, unknown>>;
+    gtag?: (...args: unknown[]) => void;
+  }
+}
 
-export default function Analytics({ debugMode = false }: { debugMode?: boolean }) {
+type GtagEventParams = Record<string, unknown>;
+
+export default function Analytics() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).gtag = (...args: any[]) => (window as any).dataLayer.push(args);
-    (window as any).gtag('js', new Date());
-    (window as any).gtag('config', GA_TRACKING_ID, { debug_mode: debugMode });
-  }, [debugMode]);
 
-  return (
-    <Script
-      src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-      strategy="afterInteractive"
-      onLoad={() => (window as any).gtag?.('event', 'page_view')}
-    />
-  );
+    window.dataLayer = window.dataLayer || [];
+
+    const gtag = (...args: unknown[]) => {
+      window.dataLayer?.push(args as unknown as Record<string, unknown>);
+    };
+
+    window.gtag = gtag;
+
+    // exemplo de page_view
+    window.gtag('event', 'page_view', {
+      page_path: window.location.pathname,
+    } as GtagEventParams);
+  }, []);
+
+  return null;
 }
