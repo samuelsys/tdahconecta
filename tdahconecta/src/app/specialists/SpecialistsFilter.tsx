@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '@/styles/products-v2.module.css';
-import { ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react'; // ← aqui é type-only
 
 type Props = {
   name: string;
