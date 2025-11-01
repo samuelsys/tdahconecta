@@ -7,7 +7,14 @@ import {
   type Analytics,
 } from "firebase/analytics";
 
+// Flag de debug para sempre logar no console e forçar DebugView
 const DEBUG = process.env.NEXT_PUBLIC_ANALYTICS_DEBUG === "1";
+
+// 🔧 Normaliza variáveis de ambiente para evitar o erro de tipo do TS
+const NODE_ENV = (process.env.NODE_ENV as unknown as string) || "development";
+const VERCEL_ENV =
+  (process.env.NEXT_PUBLIC_VERCEL_ENV as unknown as string) || "";
+const IS_PROD = (VERCEL_ENV || NODE_ENV) === "production";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
@@ -27,7 +34,7 @@ export function initFirebase(): void {
 
   if (!app) {
     app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-    if (DEBUG || process.env.NODE_ENV !== "production") {
+    if (DEBUG || !IS_PROD) {
       console.info("[analytics] Firebase app initialized", {
         projectId: firebaseConfig.projectId,
       });
@@ -37,21 +44,25 @@ export function initFirebase(): void {
   if (!ready) {
     ready = (async () => {
       try {
-        // Em produção: sempre tenta; em dev: só se DEBUG=1
-        if (process.env.NODE_ENV !== "production" && !DEBUG) {
-          if (DEBUG || process.env.NODE_ENV !== "production") {
-            console.info("[analytics] Skipping GA init in dev (set NEXT_PUBLIC_ANALYTICS_DEBUG=1 to enable).");
+        // Em produção: sempre tenta; em dev/test: só se DEBUG=1
+        if (!IS_PROD && !DEBUG) {
+          if (DEBUG || !IS_PROD) {
+            console.info(
+              "[analytics] Skipping GA init in dev (set NEXT_PUBLIC_ANALYTICS_DEBUG=1 to enable).",
+            );
           }
           return false;
         }
 
         if (!firebaseConfig.measurementId) {
-          console.warn("[analytics] Missing NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID");
+          console.warn(
+            "[analytics] Missing NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID",
+          );
           return false;
         }
 
         const supported = await isSupported().catch(() => false);
-        if (DEBUG || process.env.NODE_ENV !== "production") {
+        if (DEBUG || !IS_PROD) {
           console.info("[analytics] isSupported =", supported);
         }
         if (!supported) return false;
@@ -65,7 +76,7 @@ export function initFirebase(): void {
           /* noop */
         }
 
-        if (DEBUG || process.env.NODE_ENV !== "production") {
+        if (DEBUG || !IS_PROD) {
           console.info("[analytics] GA4 ready");
         }
 
@@ -91,9 +102,9 @@ export async function getAnalyticsInstance(): Promise<Analytics | null> {
 /** Envia evento. Em dev/DEBUG sempre loga no console. */
 export async function trackEvent(
   name: string,
-  params?: Record<string, unknown>
+  params?: Record<string, unknown>,
 ) {
-  if (DEBUG || process.env.NODE_ENV !== "production") {
+  if (DEBUG || !IS_PROD) {
     console.debug("[analytics:event]", name, params || {});
     (window as any).__ANALYTICS_TAP?.(name, params);
   }
@@ -108,7 +119,7 @@ export async function trackEvent(
     };
     logEvent(a, name as any, payload);
   } catch (e) {
-    if (DEBUG || process.env.NODE_ENV !== "production") {
+    if (DEBUG || !IS_PROD) {
       console.warn("[analytics] logEvent failed", e);
     }
   }
