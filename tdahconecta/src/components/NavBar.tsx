@@ -46,17 +46,14 @@ export default function NavBar() {
       </button>
 
       <ul className={`${styles.links} ${open ? styles.isOpen : ''}`}>
-        <li><Link href="/">Especialistas</Link></li>
 
         {/* novo item: escolher cadastro */}
         <li>
-          <Link className={styles.cta} href="/register">Cadastrar</Link>
         </li>
-        <li><Link href="/info">Perfil</Link></li>
 
         {!logged && (
           <>
-            <li><Link href="/auth/login">Entrar</Link></li>
+            <li><Link href="/">Home</Link></li>
           </>
         )}
       </ul>
