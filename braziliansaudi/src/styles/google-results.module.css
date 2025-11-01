@@ -1,0 +1,262 @@
+/* components/ItemList.module.css */
+.container {
+    padding: 20px;
+    width: 80%;
+    margin: 0 auto;
+    min-height: 800px;
+  }
+  
+  
+  .item {
+    padding: 10px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .title {
+    margin: 0;
+    color: #333;
+    font-size: 20px;
+  }
+  
+  .description {
+    margin: 10px 0;
+    color: #666;
+  }
+  
+  .buttons {
+    margin-top: 10px;
+  }
+  
+  .button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .editButton {
+    background-color: #0070f3;
+  }
+  
+  .deleteButton {
+    background-color: #e00;
+  }
+  .container {
+    padding: 20px;
+  }
+  
+  .countrySection {
+    margin-bottom: 40px;
+  }
+  
+  .countryHeader {
+    background-color: #3dae8a;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .flagIcon {
+    width: 40px;
+    border-radius: 50%;
+  }
+  
+  .adCard {
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    min-width: 100%; /* Limita a largura máxima do link ao container */
+    
+  }
+  
+  .adTitle {
+    margin: 0 0 10px 0;
+    color: #1a0dab;
+    font-size: 18px;
+    display: inline-block; /* Garante que o link respeite seu próprio espaço */
+    overflow-wrap: break-word; /* Quebra a palavra para evitar overflow */
+    word-wrap: break-word; /* Alternativa para overflow-wrap para suporte cruzado */
+    word-break: break-all; /* Força a quebra de palavras em caracteres para evitar overflow */
+  }
+  
+  .adLink {
+    display: block;
+    margin-bottom: 10px;
+    color: #006621;
+    font-size: 14px;
+    overflow-wrap: break-word; /* Quebra a palavra para evitar overflow */
+    word-wrap: break-word; /* Alternativa para overflow-wrap para suporte cruzado */
+    word-break: break-all; /* Força a quebra de palavras em caracteres para evitar overflow */
+  }
+  
+  /* google-results.module.css */
+.sitelink {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #0073e6;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sitelink:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .sitelinksContainer {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fafafa;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .sitelinksTitle {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .keywords {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+
+  
+  /* Continuação de styles/pressel-mypages.module.css */
+
+.subCardsContainer {
+    margin-top: 20px;
+  }
+  
+  .sitelinksSubCard, .keywordsSubCard {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+  .subCardTitle {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .siteLinkItem {
+    display: block; /* Faça os sitelinks aparecerem um abaixo do outro */
+    margin-bottom: 5px;
+    color: #1a0dab;
+    text-decoration: none; /* Opção para remover o sublinhado dos links */
+  }
+  
+  .keywordItem {
+    display: inline-block;
+    background-color: #e8f0fe;
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin: 5px 10px 5px 0;
+    color: #3c4043;
+    font-size: 14px;
+  }
+  
+  .resultCard {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .resultTitle {
+    font-size: 16px; /* Reduzindo o tamanho da fonte para títulos em dispositivos móveis */
+  }
+  
+  .resultLink, .siteLinkItem a {
+    word-break: break-word; /* Garante que os links não estendam fora da tela */
+  }
+
+  .resultCard {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .resultLink, .siteLinkItem a {
+    display: inline-block; /* Garante que o link respeite seu próprio espaço */
+    overflow-wrap: break-word; /* Quebra a palavra para evitar overflow */
+    word-wrap: break-word; /* Alternativa para overflow-wrap para suporte cruzado */
+    word-break: break-all; /* Força a quebra de palavras em caracteres para evitar overflow */
+    max-width: 100%; /* Limita a largura máxima do link ao container */
+  }
+
+  .noResultsCard {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    text-align: center;
+}
+
+.noResultsCardH2 {
+    color: #333;
+    font-size: 24px;
+}
+
+.noResultsCardP {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.4;
+    margin-top: 10px;
+}
+
+  /* Estilo para o elemento informativo fixado no footer */
+.informativeFooter {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #3dae8a; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1); /* Sombra para dar sensação de elevação */
+    font-size: 20px; /* Ajuste conforme necessário */
+    height: 82px;
+    margin-bottom: 20px;
+}
+  
+  /* Ajustes adicionais para telas muito pequenas */
+@media (max-width: 480px) {
+   .container {
+    width: 90%;
+   }
+}
+
+.card {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.cardTitle {
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.flagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}

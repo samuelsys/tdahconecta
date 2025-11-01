@@ -1,0 +1,96 @@
+/* styles/Home.module.css */
+.container {
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #3dae8a, #3dae8a); /* Cor atualizada */
+    padding-top: 30px;
+    padding-bottom: 130px;
+  }
+  
+  .main {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+  }
+  
+  .title {
+    margin: 0;
+    line-height: 1.15;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 28px;
+  }
+  
+  .description {
+    line-height: 1.5;
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color:dimgray
+  }
+  
+  .featuresList {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .featuresList li {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+  
+  .featuresList i {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #3dae8a; /* Cor atualizada */
+  }
+  
+  .button {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 0.75rem 2rem;
+    margin-top: 20px;
+    background-color: #3dae8a; /* Cor atualizada */
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: darken(#3dae8a, 10%); /* Escurecer a cor ao passar o mouse */
+  }
+  
+  .loginButton {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 0.75rem 2rem;
+    margin-top: 20px;
+    color: #3dae8a;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+   
+  .subscribeButton {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 0.75rem 2rem;
+    margin-top: 20px;
+    background-color: #3dae8a; /* Cor atualizada */
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  

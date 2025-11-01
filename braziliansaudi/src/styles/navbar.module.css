@@ -1,0 +1,129 @@
+.nav {
+  --nav-h: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: #3dae8a;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand a {
+  font-weight: 900;              /* ainda mais forte */
+  letter-spacing: 1px;           /* mais espaçado */
+  text-transform: uppercase;     /* caixa alta */
+  color: white;                /* verde principal do projeto */
+  text-decoration: none;
+  font-size: 20px;               /* ligeiramente maior */
+  transition: color 0.2s ease;
+}
+
+.brand a:hover {
+  color: #059669;                /* tom mais escuro ao passar o mouse */
+}
+
+.hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  background: transparent;
+  border: 0;
+  padding: 6px;
+  cursor: pointer;
+}
+.hamburger span {
+  width: 22px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+}
+
+/* Links (mobile) */
+.links {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--nav-h);
+  display: grid;
+  gap: 8px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 16px;
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.isOpen {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.links li {
+  list-style: none;
+}
+.links a {
+  display: inline-block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+}
+.links a:hover {
+  background: #f3f4f6;
+  color: #3dae8a;
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .hamburger { display: none; }
+  .links {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    padding: 0;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    background: transparent;
+  }
+  .links a { padding: 8px 12px; }
+}
+
+/* botão minimalista que respeita o tema atual */
+.btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.35);
+  color: inherit;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  line-height: 1;
+}
+.btn:hover { background: rgba(255,255,255,.08); }
+
+/* avatar do usuário ao lado de "Perfil" quando disponível */
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: inline-block;
+  vertical-align: middle;
+  object-fit: cover;
+  margin-right: 6px;
+}
+
+/* útil se quiser diferenciar o link de perfil */
+.profileLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

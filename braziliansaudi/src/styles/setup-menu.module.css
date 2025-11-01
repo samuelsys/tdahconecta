@@ -1,0 +1,76 @@
+.sidebar {
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form h2 {
+    color: #333;
+    margin: 0 0 10px 0;
+    font-size: 24px;
+}
+
+.form label {
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.form input[type="text"],
+.form input[type="url"],
+.form input[type="color"],
+.form textarea {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333;
+}
+
+.form textarea {
+    resize: vertical;
+}
+
+.form button {
+    padding: 10px 0;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form button:hover {
+    background-color: #0056b3;
+}
+
+/* Adiciona espaçamento entre os inputs */
+.form input:not(:last-child),
+.form textarea:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+/* Estilo para os links opcionais para torná-los consistentes com os inputs */
+.form input[type="url"]::placeholder {
+    color: #aaa;
+}
+
+/* Melhorias na acessibilidade dos elementos focáveis */
+.form input:focus,
+.form textarea:focus,
+.form button:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}

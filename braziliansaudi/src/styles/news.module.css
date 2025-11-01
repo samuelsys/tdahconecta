@@ -1,0 +1,241 @@
+:root {
+  --radius: 14px;
+  --shadow: 0 6px 18px rgba(17,24,39,.06);
+}
+
+/* ===== Toolbar (usa a .container-main ao redor) ===== */
+.toolbar {
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.title { margin: 0; font-size: 24px; font-weight: 800; }
+.subtitle { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+
+.controls { display: flex; gap: 8px; align-items: center; }
+.select {
+  border: 1px solid var(--ring);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ===== Bloco de Filtros (se usar filtros inline na página) ===== */
+.filters {
+  border: 1px solid var(--ring);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin: 12px 0 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.filtersRow {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 10px;
+}
+.group { margin-bottom: 8px; }
+.label { display: block; font-weight: 800; font-size: 13px; margin-bottom: 6px; color: var(--muted); }
+.input {
+  border: 1px solid var(--ring);
+  border-radius: 10px;
+  padding: 10px 12px;
+  width: 100%;
+  background: #fff; color: var(--ink); font-weight: 700;
+}
+.reset { composes: select; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1px solid var(--ring);
+  background: #fff; color: var(--ink);
+  padding: 6px 10px; border-radius: 999px;
+  font-weight: 700; font-size: 12px; cursor: pointer;
+}
+.chip:hover { border-color: var(--ink); }
+.chipActive { background: var(--brand); color: #fff; border-color: var(--brand); }
+.count { margin-left: 6px; font-weight: 800; opacity: .85; }
+
+/* ===== Grid de resultados ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+  gap: 16px;
+}
+
+/* ===== Card ===== */
+.card {
+  border: 1px solid var(--ring);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: #d1d5db; }
+
+/* imagem */
+.imgWrap, .cardImgWrap { position: relative; aspect-ratio: 16/9; background: #f3f4f6; overflow: hidden; display: block; }
+.img, .cardImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* pílula sobre a imagem (país/flag opcional) */
+.pill {
+  position: absolute; left: 10px; top: 10px;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fffffff2; color: var(--ink);
+  border: 1px solid var(--ring);
+  border-radius: 999px; padding: 6px 10px;
+  font-size: 12px; font-weight: 800;
+}
+.flag { margin-right: 6px; }
+
+/* corpo */
+.body, .cardBody { padding: 12px; }
+.meta, .metaRow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.metaPill {
+  background: #f3f4f6;
+  border: 1px solid var(--ring);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.metaText { font-size: 13px; color: #6b7280; }
+.dot { width: 4px; height: 4px; border-radius: 50%; background: #d1d5db; display: inline-block; }
+
+.titleSm, .cardTitle { margin: 6px 0 10px; font-size: 18px; line-height: 1.25; color: var(--ink); }
+.cardTitle a { color: var(--ink); text-decoration: none; }
+.cardTitle a:hover { text-decoration: underline; }
+
+/* ===== Área inferior: votos e link ===== */
+.vote, .cardFooter {
+  margin-top: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; padding: 10px 12px;
+  border-top: 1px solid var(--ring); background: #f8fafc;
+}
+
+/* status (opcional) */
+.status { font-size: 12px; color: var(--muted); }
+.statusValue { color: var(--ink); font-weight: 800; }
+.statusMuted { color: var(--muted); }
+
+/* Ações (👍 👎) – estilo joinha/não-joinha */
+.actions, .voteBar { display: inline-flex; align-items: center; gap: 8px; }
+
+.voteBtn {
+  width: 40px; height: 40px;
+  border: 1px solid var(--ring);
+  border-radius: 999px;
+  background: #fff; color: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer;
+  transition: transform .05s ease-in-out, border-color .15s ease;
+}
+.voteBtn:hover { border-color: var(--ink); }
+.voteBtn:active { transform: scale(0.98); }
+.voteBtn:disabled { opacity: .6; cursor: not-allowed; }
+
+.voteUpActive {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+}
+.voteDownActive {
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+/* botão "Read" */
+.readBtn {
+  margin-left: auto;
+  border: 1px solid var(--ring);
+  border-radius: 10px;
+  padding: 8px 12px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+.readBtn:hover { border-color: var(--ink); }
+
+/* Caso use os botões genéricos também */
+.btn { border-radius: 10px; padding: 10px 16px; font-weight: 700; background: #fff; border: 1px solid var(--ring); color: var(--ink); cursor: pointer; }
+.btnOutline { composes: btn; }
+.btnSuccess { composes: btn; background: var(--brand); color: #fff; border-color: var(--brand); }
+.btnDanger { composes: btn; background: #ef4444; color: #fff; border-color: #ef4444; }
+.error { color: #7f1d1d; font-size: 12px; padding: 0 12px 12px; }
+
+/* ===== Layout de página: rail + resultados (opcional) ===== */
+.pageGrid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+@media (max-width: 1024px) {
+  .pageGrid { grid-template-columns: 1fr; }
+}
+
+.rail { position: sticky; top: 72px; height: max-content; }
+@media (max-width: 1024px) {
+  .rail { display: none; }
+}
+
+.results { min-width: 0; }
+
+/* Chips ativos inline (faixa compacta) */
+.activeRow {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin: 6px 0 12px;
+}
+.activeChipsInline { display: flex; flex-wrap: wrap; gap: 8px; }
+.resetInline {
+  border: 1px solid var(--ring); background: #fff; color: var(--ink);
+  border-radius: 10px; padding: 8px 12px; font-weight: 700; cursor: pointer;
+}
+
+/* ===== FAB/Drawer mobile (se quiser abrir filtros num painel) ===== */
+.fab {
+  position: fixed; right: 16px; bottom: 16px; z-index: 60;
+  background: var(--brand); color: #fff; border: 0;
+  border-radius: 999px; padding: 12px 16px; font-weight: 800; box-shadow: 0 8px 24px rgba(16,185,129,.35);
+  cursor: pointer; display: none;
+}
+@media (max-width: 1024px) { .fab { display: inline-flex; } }
+
+.drawer { position: fixed; inset: 0; z-index: 70; }
+.drawerBackdrop {
+  position: absolute; inset: 0; background: rgba(0,0,0,.4);
+}
+.drawerPanel {
+  position: absolute; inset-inline: 0; bottom: 0;
+  background: #fff; color: var(--ink); border-top-left-radius: 16px; border-top-right-radius: 16px;
+  box-shadow: 0 -10px 30px rgba(17,24,39,.2);
+  max-height: 85vh; display: flex; flex-direction: column;
+}
+.drawerHead {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-bottom: 1px solid var(--ring);
+}
+.drawerBody {
+  padding: 12px; overflow: auto;
+}
+.drawerFoot {
+  padding: 12px 16px; border-top: 1px solid var(--ring); display: flex; justify-content: flex-end;
+}
+.btnClose {
+  background: #fff; border: 1px solid var(--ring); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-weight: 700;
+}
+.btnApply {
+  background: var(--brand); color: #fff; border: 0; border-radius: 10px; padding: 10px 16px; font-weight: 800; cursor: pointer;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 360px) {
+  .select { padding: 8px 10px; }
+}

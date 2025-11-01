@@ -1,0 +1,142 @@
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+    flex-wrap: wrap; /* Permite que as colunas se ajustem conforme a largura da tela */
+
+}
+
+.leftColumn, .rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1; /* Faz com que cada coluna expanda para ocupar o espaço disponível */
+}
+
+
+/* Aplica estilos para inputField, selectField, sliderField, sliderContainer, e sliderLabel como previamente definido */
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .leftColumn, .rightColumn {
+        width: 100%;
+    }
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.sliderField {
+    flex: 1; /* Faz cada campo crescer igualmente para ocupar o espaço disponível */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sliderField .sliderContainer {
+    width: 100%; /* Garante que o slider ocupe toda a largura do seu contêiner */
+}
+
+.inputField, .selectField {
+    flex: 1; /* Faz cada campo crescer igualmente para ocupar o espaço disponível */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Continuar com as outras regras CSS já definidas */
+
+
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.selectField select, .inputField input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Ajustes para os inputs e selects para manter a consistência */
+.inputField, .selectField {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.inputField input, .selectField select {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+}
+
+
+.sliderField {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sliderContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.sliderLabel {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaçamento entre ícone e texto */
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.inputField input, .selectField select {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    background-color: transparent;
+    padding: 10px 0; /* Ajusta o padding para dar espaço ao traço sublinhado */
+    border-bottom: 2px solid #10b981; /* Aplica a cor do site para o sublinhado */
+
+}
+
+
+/* Mantenha as outras regras CSS já definidas */
+
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column; /* Empilha os elementos verticalmente */
+    }
+
+    .inputField, .selectField, .sliderField {
+        /* Remove o flex-grow em dispositivos móveis para evitar estiramento desnecessário */
+        width: 100%; /* Garante que os campos ocupem toda a largura disponível */
+    }
+}
