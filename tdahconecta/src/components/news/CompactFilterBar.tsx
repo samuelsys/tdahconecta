@@ -50,22 +50,32 @@ export default function CompactFilterBar(props: Props) {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+
     const mq = window.matchMedia("(max-width: 768px)");
-    const apply = () => {
-      const mobile = mq.matches;
+
+    const apply = (src?: MediaQueryListEvent | MediaQueryList) => {
+      const matches = src && "matches" in src ? (src as MediaQueryListEvent).matches : mq.matches;
+      const mobile = Boolean(matches);
       setIsMobile(mobile);
       setMobileOpen(!mobile); // desktop: aberto; mobile: fechado por padrão
       if (!mobile) setOpenKind("none"); // fecha expanders ao sair do mobile
     };
-    apply();
-    mq.addEventListener?.("change", apply);
-    // @ts-expect-error Safari
-    mq.addListener && mq.addListener(apply);
-    return () => {
-      mq.removeEventListener?.("change", apply);
-      // @ts-expect-error Safari
-      mq.removeListener && mq.removeListener(apply);
-    };
+
+    // estado inicial
+    apply(mq);
+
+    // handler para mudanças
+    const handler = (e: MediaQueryListEvent) => apply(e);
+
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", handler);
+      return () => mq.removeEventListener("change", handler);
+    } else if (typeof (mq as any).addListener === "function") {
+      (mq as any).addListener(handler);
+      return () => (mq as any).removeListener(handler);
+    }
+
+    return () => {};
   }, []);
 
   // buscas locais nos expanders
@@ -122,6 +132,7 @@ export default function CompactFilterBar(props: Props) {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             aria-label="Search"
+            autoComplete="off"
           />
         </div>
 
