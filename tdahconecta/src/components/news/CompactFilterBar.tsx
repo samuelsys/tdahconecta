@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "@/styles/filterbar.module.css";
 import type { Continent } from "@/lib/geo";
+import { trackEvent } from "@/lib/firebaseClient";
 
 // tipo local só aqui
 type FilterOption = { id: string; label: string; count: number };
@@ -104,12 +105,80 @@ export default function CompactFilterBar(props: Props) {
     ) : portalOptions;
   }, [qPortal, portalOptions]);
 
-  const toggleId = (arr: string[], id: string, set: (a: string[]) => void) => {
-    set(arr.includes(id) ? arr.filter(x => x !== id) : [...arr, id]);
+  // ===== Tracking helpers =====
+  const debounceTimer = useRef<number | null>(null);
+  const trackSearch = (value: string) => {
+    if (debounceTimer.current) window.clearTimeout(debounceTimer.current);
+    debounceTimer.current = window.setTimeout(() => {
+      trackEvent("filter_search_input", {
+        q_len: value.trim().length,
+        q_sample: value.trim().slice(0, 40) || null,
+      });
+    }, 500);
   };
 
-  const onClickCountries = () => setOpenKind(k => k === "countries" ? "none" : "countries");
-  const onClickPortals  = () => setOpenKind(k => k === "portals"  ? "none" : "portals");
+  const onChangeContinent = (val: Continent | "") => {
+    setContinent(val);
+    trackEvent("filter_continent_set", { value: val || "ALL" });
+  };
+
+  const toggleCountry = (id: string) => {
+    const exists = selectedCountries.includes(id);
+    const next = exists
+      ? selectedCountries.filter(x => x !== id)
+      : [...selectedCountries, id];
+    setSelectedCountries(next);
+    trackEvent("filter_country_toggle", {
+      id,
+      action: exists ? "remove" : "add",
+      total: next.length,
+    });
+  };
+
+  const togglePortal = (id: string) => {
+    const exists = selectedPortals.includes(id);
+    const next = exists
+      ? selectedPortals.filter(x => x !== id)
+      : [...selectedPortals, id];
+    setSelectedPortals(next);
+    trackEvent("filter_portal_toggle", {
+      id,
+      action: exists ? "remove" : "add",
+      total: next.length,
+    });
+  };
+
+  const onChangeLang = (v: "en" | "ar") => {
+    setLang(v);
+    trackEvent("filter_lang_set", { value: v });
+  };
+
+  const onChangeLimit = (n: number) => {
+    setLimit(n);
+    trackEvent("filter_limit_set", { value: n });
+  };
+
+  const onClickReset = () => {
+    trackEvent("filter_reset", {
+      continent_before: continent || "ALL",
+      countries_count_before: selectedCountries.length,
+      portals_count_before: selectedPortals.length,
+      q_len_before: (props.q || "").trim().length,
+    });
+    onReset();
+  };
+
+  const onClickCountries = () => {
+    const nextOpen = openKind === "countries" ? "none" : "countries";
+    setOpenKind(nextOpen);
+    trackEvent("filter_panel_toggle", { panel: "countries", state: nextOpen === "countries" ? "open" : "close" });
+  };
+
+  const onClickPortals = () => {
+    const nextOpen = openKind === "portals" ? "none" : "portals";
+    setOpenKind(nextOpen);
+    trackEvent("filter_panel_toggle", { panel: "portals", state: nextOpen === "portals" ? "open" : "close" });
+  };
 
   // contador de filtros ativos (continent + countries + portals)
   const activeCount = (continent ? 1 : 0) + selectedCountries.length + selectedPortals.length;
@@ -119,6 +188,7 @@ export default function CompactFilterBar(props: Props) {
     const willOpen = !mobileOpen;
     setMobileOpen(willOpen);
     if (!willOpen) setOpenKind("none"); // fechamos expanders quando colapsa
+    trackEvent("filter_mobile_collapse", { state: willOpen ? "open" : "close" });
   };
 
   return (
@@ -130,7 +200,7 @@ export default function CompactFilterBar(props: Props) {
             className={styles.input}
             placeholder="Search title/portal…"
             value={q}
-            onChange={(e) => setQ(e.target.value)}
+            onChange={(e) => { setQ(e.target.value); trackSearch(e.target.value); }}
             aria-label="Search"
             autoComplete="off"
           />
@@ -161,7 +231,7 @@ export default function CompactFilterBar(props: Props) {
             <select
               className={styles.select}
               value={continent}
-              onChange={(e) => setContinent((e.target.value || "") as Continent | "")}
+              onChange={(e) => onChangeContinent((e.target.value || "") as Continent | "")}
               aria-label="Continent"
             >
               <option value="">{CONTINENT_LABEL[""]}</option>
@@ -200,7 +270,7 @@ export default function CompactFilterBar(props: Props) {
             <select
               className={styles.select}
               value={lang}
-              onChange={(e) => (e.target.value === "ar" ? setLang("ar") : setLang("en"))}
+              onChange={(e) => onChangeLang(e.target.value === "ar" ? "ar" : "en")}
               aria-label="Source language"
             >
               <option value="en">EN</option>
@@ -212,7 +282,7 @@ export default function CompactFilterBar(props: Props) {
             <select
               className={styles.select}
               value={limit}
-              onChange={(e) => setLimit(Number(e.target.value))}
+              onChange={(e) => onChangeLimit(Number(e.target.value))}
               aria-label="Items"
             >
               {LIMITS.map(n => <option key={n} value={n}>{n}</option>)}
@@ -222,7 +292,7 @@ export default function CompactFilterBar(props: Props) {
           <div className={styles.item}>
             <button
               className={styles.btnGhost}
-              onClick={() => { onReset(); setOpenKind("none"); }}
+              onClick={onClickReset}
             >
               Reset
             </button>
@@ -243,20 +313,46 @@ export default function CompactFilterBar(props: Props) {
                 <>
                   <button
                     className={styles.btnMini}
-                    onClick={() => props.setSelectedCountries(countriesFiltered.map(c => c.id))}
+                    onClick={() => {
+                      const all = countriesFiltered.map(c => c.id);
+                      setSelectedCountries(all);
+                      trackEvent("filter_country_bulk", { action: "select_all", total: all.length });
+                    }}
                   >All</button>
-                  <button className={styles.btnMini} onClick={() => props.setSelectedCountries([])}>Clear</button>
+                  <button
+                    className={styles.btnMini}
+                    onClick={() => {
+                      setSelectedCountries([]);
+                      trackEvent("filter_country_bulk", { action: "clear_all" });
+                    }}
+                  >Clear</button>
                 </>
               ) : (
                 <>
                   <button
                     className={styles.btnMini}
-                    onClick={() => props.setSelectedPortals(portalsFiltered.map(p => p.id))}
+                    onClick={() => {
+                      const all = portalsFiltered.map(p => p.id);
+                      setSelectedPortals(all);
+                      trackEvent("filter_portal_bulk", { action: "select_all", total: all.length });
+                    }}
                   >All</button>
-                  <button className={styles.btnMini} onClick={() => props.setSelectedPortals([])}>Clear</button>
+                  <button
+                    className={styles.btnMini}
+                    onClick={() => {
+                      setSelectedPortals([]);
+                      trackEvent("filter_portal_bulk", { action: "clear_all" });
+                    }}
+                  >Clear</button>
                 </>
               )}
-              <button className={styles.btnMini} onClick={() => setOpenKind("none")}>Close</button>
+              <button
+                className={styles.btnMini}
+                onClick={() => {
+                  setOpenKind("none");
+                  trackEvent("filter_panel_toggle", { panel: openKind, state: "close" });
+                }}
+              >Close</button>
             </div>
           </div>
 
@@ -283,11 +379,20 @@ export default function CompactFilterBar(props: Props) {
               ? countriesFiltered.map(c => {
                   const active = selectedCountries.includes(c.id);
                   return (
-                    <label key={c.id} className={`${styles.option} ${active ? styles.optionActive : ""}`}>
+                    <label
+                      key={c.id}
+                      className={`${styles.option} ${active ? styles.optionActive : ""}`}
+                      onClick={(e) => {
+                        // permitir click no label inteiro
+                        if ((e.target as HTMLElement).tagName.toLowerCase() !== "input") {
+                          toggleCountry(c.id);
+                        }
+                      }}
+                    >
                       <input
                         type="checkbox"
                         checked={active}
-                        onChange={() => toggleId(selectedCountries, c.id, setSelectedCountries)}
+                        onChange={() => toggleCountry(c.id)}
                       />
                       <span className={styles.optionLabel} title={c.label}>{c.label}</span>
                       <span className={styles.count}>{c.count}</span>
@@ -297,11 +402,19 @@ export default function CompactFilterBar(props: Props) {
               : portalsFiltered.map(p => {
                   const active = selectedPortals.includes(p.id);
                   return (
-                    <label key={p.id} className={`${styles.option} ${active ? styles.optionActive : ""}`}>
+                    <label
+                      key={p.id}
+                      className={`${styles.option} ${active ? styles.optionActive : ""}`}
+                      onClick={(e) => {
+                        if ((e.target as HTMLElement).tagName.toLowerCase() !== "input") {
+                          togglePortal(p.id);
+                        }
+                      }}
+                    >
                       <input
                         type="checkbox"
                         checked={active}
-                        onChange={() => toggleId(selectedPortals, p.id, setSelectedPortals)}
+                        onChange={() => togglePortal(p.id)}
                       />
                       <span className={styles.optionLabel} title={p.id}>{p.id}</span>
                       <span className={styles.count}>{p.count}</span>

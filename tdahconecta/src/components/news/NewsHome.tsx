@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "@/styles/news.module.css";
 import NewsCard from "./NewsCard";
 import CompactFilterBar from "@/components/news/CompactFilterBar";
@@ -8,6 +8,7 @@ import CompactFilterBar from "@/components/news/CompactFilterBar";
 import { inferCountryFromUrl } from "@/lib/country";
 import { getContinentForCountry } from "@/lib/geo";
 import type { Continent } from "@/lib/geo";
+import { trackEvent } from "@/lib/firebaseClient";
 
 type Article = {
   title: string;
@@ -145,6 +146,70 @@ export default function NewsHome() {
     return countriesAll.filter((c) => getContinentForCountry(c.id) === continent);
   }, [countriesAll, continent]);
 
+  // ===== wrappers com tracking imediato (garantem log no clique) =====
+  const setContinentTracked = (val: Continent | "") => {
+    setContinent(val);
+    trackEvent("filters_change", { source: "home", field: "continent", value: val || "ALL" });
+  };
+  const setCountriesSelTracked = (arr: string[]) => {
+    setCountriesSel(arr);
+    trackEvent("filters_change", { source: "home", field: "countries", count: arr.length, sample: arr.slice(0, 5) });
+  };
+  const setPortalsSelTracked = (arr: string[]) => {
+    setPortalsSel(arr);
+    trackEvent("filters_change", { source: "home", field: "portals", count: arr.length, sample: arr.slice(0, 5) });
+  };
+  const setQTracked = (value: string) => {
+    setQ(value);
+    trackEvent("filters_change", { source: "home", field: "q", q_len: value.trim().length });
+  };
+  const setLangTracked = (v: "en" | "ar") => {
+    setLang(v);
+    trackEvent("filters_change", { source: "home", field: "lang", value: v });
+  };
+  const setLimitTracked = (n: number) => {
+    setLimit(n);
+    trackEvent("filters_change", { source: "home", field: "limit", value: n });
+  };
+  const resetTracked = () => {
+    trackEvent("filters_change", {
+      source: "home",
+      field: "reset",
+      continent_before: continent || "ALL",
+      countries_count_before: countriesSel.length,
+      portals_count_before: portalsSel.length,
+      q_len_before: q.trim().length,
+      lang_before: lang,
+      limit_before: limit,
+    });
+    setContinent("");
+    setCountriesSel([]);
+    setPortalsSel([]);
+    setQ("");
+  };
+
+  // ======= TRACKING agregado (debounced) =======
+  const firstRunRef = useRef(true);
+  useEffect(() => {
+    if (firstRunRef.current) {
+      firstRunRef.current = false;
+      return;
+    }
+    const t = setTimeout(() => {
+      trackEvent("filters_update", {
+        continent: continent || "ALL",
+        countries_count: countriesSel.length,
+        portals_count: portalsSel.length,
+        q_len: q.trim().length || 0,
+        lang,
+        limit,
+        source: "home",
+      });
+    }, 600);
+    return () => clearTimeout(t);
+  }, [continent, countriesSel, portalsSel, q, lang, limit]);
+  // ============================================
+
   // Aplicar filtros + busca
   const filtered = useMemo(() => {
     const qn = q.trim().toLowerCase();
@@ -160,28 +225,23 @@ export default function NewsHome() {
     });
   }, [enriched, continent, countriesSel, portalsSel, q]);
 
-  const reset = () => { setContinent(""); setCountriesSel([]); setPortalsSel([]); setQ(""); };
-
   return (
     <>
-      {/* Topbar + FILTROS EM UMA LINHA */}
       <CompactFilterBar
-        q={q} setQ={setQ}
-        lang={lang} setLang={setLang}
-        limit={limit} setLimit={setLimit}
-        continent={continent} setContinent={setContinent}
+        q={q} setQ={setQTracked}
+        lang={lang} setLang={setLangTracked}
+        limit={limit} setLimit={setLimitTracked}
+        continent={continent} setContinent={setContinentTracked}
         countryOptions={countryOptions}
-        selectedCountries={countriesSel} setSelectedCountries={setCountriesSel}
+        selectedCountries={countriesSel} setSelectedCountries={setCountriesSelTracked}
         portalOptions={portalsAll}
-        selectedPortals={portalsSel} setSelectedPortals={setPortalsSel}
-        onReset={reset}
+        selectedPortals={portalsSel} setSelectedPortals={setPortalsSelTracked}
+        onReset={resetTracked}
       />
 
-      {/* States */}
       {state === "loading" && <div className="alert">Loading… fetching newsroom</div>}
       {state === "error" && <div className="alert alert--error">Error: {error || "Unknown error"}</div>}
 
-      {/* Grid */}
       <div className={styles.grid}>
         {filtered.map((a) => <NewsCard key={a.url} article={a} />)}
       </div>
