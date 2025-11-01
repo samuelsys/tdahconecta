@@ -1,13 +1,13 @@
-import ClientShell from '@/components/ClientShell';
-import SpecialistsHome from './specialists/SpecialistsHome';
+import ClientShell from "@/components/ClientShell";
+import NewsHome from "@/components/news/NewsHome";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default function Page() {
   return (
     <ClientShell>
-      <SpecialistsHome />
+      <NewsHome />
     </ClientShell>
   );
 }

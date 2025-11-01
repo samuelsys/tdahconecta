@@ -92,3 +92,117 @@ body {
 .btn-primary:hover { filter: brightness(.95); }
 .btn-outline { border: 1px solid var(--ring); color: var(--ink); background: #fff; }
 .btn-outline:hover { border-color: var(--ink); }
+
+/* === Filters === */
+.filters { border: 1px solid var(--ring); border-radius: 12px; padding: 14px; margin-bottom: 16px; background: var(--surface); }
+.filters__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.filters__group { display: block; margin-bottom: 10px; }
+.filters__label { display: block; font-weight: 800; font-size: 13px; margin-bottom: 6px; color: var(--muted); }
+.filters__muted { color: var(--muted); font-size: 13px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--ring); background: #fff; color: var(--ink); padding: 6px 10px; border-radius: 999px; font-weight: 700; font-size: 12px; cursor: pointer; }
+.chip:hover { border-color: var(--ink); }
+.chip--active { background: var(--brand); color: #fff; border-color: var(--brand); }
+.chip__count { margin-left: 6px; font-weight: 800; opacity: .85; }
+/* === Inputs / selects consistentes === */
+.select {
+  border: 1px solid var(--ring);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* === Alerts (loading / error) === */
+.alert {
+  border: 1px solid var(--ring);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fff;
+  font-size: 14px;
+  color: var(--ink);
+  margin: 8px 0;
+}
+.alert--error { border-color: #fecaca; background: #fff1f2; color: #7f1d1d; }
+
+/* === Grid de notícias === */
+.grid-news {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+@media (max-width: 640px)  { .grid-news { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 641px) and (max-width: 1024px) { .grid-news { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1025px) { .grid-news { grid-template-columns: repeat(4, 1fr); } }
+
+/* Cada card ocupa 1 coluna; grid auto preenche */
+.card {
+  grid-column: span 1 / span 1;
+  border: 1px solid var(--ring);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(17,24,39,.08); border-color: #d1d5db; }
+
+/* Imagem 16:9 */
+.card__imgWrap {
+  position: relative;
+  aspect-ratio: 16/9;
+  background: #f3f4f6;
+  overflow: hidden;
+}
+.card__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* Pílula de país */
+.pill {
+  position: absolute;
+  left: 10px; top: 10px;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fffffff2;
+  color: var(--ink);
+  border: 1px solid var(--ring);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px; font-weight: 800;
+}
+
+/* Corpo do card */
+.card__body { padding: 12px; }
+.card__meta {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  font-size: 12px; color: var(--muted);
+}
+.card__meta .dot { opacity: .5; }
+.card__title { margin: 6px 0 10px; font-size: 18px; line-height: 1.25; color: var(--ink); }
+.card__link { color: #2563eb; font-weight: 800; text-decoration: none; }
+.card__link:hover { text-decoration: underline; }
+
+/* Barra de voto */
+.voteBar {
+  margin-top: auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--ring);
+  background: #f8fafc;
+}
+.voteBar__status { font-size: 12px; color: var(--muted); }
+.voteBar__statusValue { color: var(--ink); font-weight: 800; }
+.voteBar__statusMuted { color: var(--muted); }
+.voteBar__actions { display: flex; gap: 8px; }
+
+/* Botões (aproveita teu .btn) */
+.btn-success { background: var(--brand); color: #fff; border: 1px solid var(--brand); }
+.btn-success:hover { filter: brightness(.95); }
+.btn-danger  { background: #ef4444; color: #fff; border: 1px solid #ef4444; }
+.btn-danger:hover { filter: brightness(.95); }
+.card__error { color: #7f1d1d; font-size: 12px; padding: 0 12px 12px; }

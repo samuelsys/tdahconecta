@@ -32,7 +32,7 @@ export default function NavBar() {
   return (
     <nav className={styles.nav}>
       <div className={styles.brand}>
-        <Link href="/">TDAH CONECTA</Link>
+        <Link href="/">BRAZILIAN SAUDI NEWS</Link>
       </div>
 
       <button
